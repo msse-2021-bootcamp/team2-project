@@ -1,9 +1,9 @@
 """
-Functions for running a Motne Carlo Simulation
+Functions for running a Monte Carlo Simulation
 """
-
 import math
 import random
+import mcsim.utilities as util
 
 def calculate_total_energy(coordinates, box_length, cutoff):
     """
@@ -40,41 +40,6 @@ def calculate_total_energy(coordinates, box_length, cutoff):
                 total_energy += LJ_ij
     return total_energy
 
-def read_xyz(filepath):
-    """
-    Reads coordinates from an xyz file.
-    
-    Parameters
-    ----------
-    filepath : str
-       The path to the xyz file to be processed.
-       
-    Returns
-    -------
-    atomic_coordinates : list
-        A two dimensional list containing atomic coordinates
-    """
-    
-    with open(filepath) as f:
-        box_length = float(f.readline().split()[0])
-        num_atoms = float(f.readline())
-        coordinates = f.readlines()
-    
-    atomic_coordinates = []
-    
-    for atom in coordinates:
-        split_atoms = atom.split()
-        
-        float_coords = []
-        
-        # We split this way to get rid of the atom label.
-        for coord in split_atoms[1:]:
-            float_coords.append(float(coord))
-            
-        atomic_coordinates.append(float_coords)
-        
-    return atomic_coordinates, box_length
-
 def calculate_LJ(r_ij):
     """
     The LJ interaction energy between two particles.
@@ -104,96 +69,6 @@ def calculate_LJ(r_ij):
     pairwise_energy = 4 * (r12_term - r6_term)
     
     return pairwise_energy
-
-def calculate_distance(coord1, coord2, box_length=None):
-    """
-    Calculate the distance between two points. When box_length is set, the minimum image convention is used to calculate the distance between the points.
-
-    Parameters
-    ----------
-    coord1, coord2 : list
-        The coordinates of the points, [x, y, z]
-    
-    box_length : float, optional
-        The box length
-
-    Returns
-    -------
-    distance : float
-        The distance between the two points accounting for periodic boundaries
-    """
-    distance = 0
-        
-    for i in range(3):
-        hold_dist = abs(coord2[i] - coord1[i])
-    
-        if (box_length):    
-            if hold_dist > box_length/2:
-                hold_dist = hold_dist - (box_length * round(hold_dist/box_length))
-        distance += math.pow(hold_dist, 2)
-
-    return math.sqrt(distance)
-
-def calculate_tail_correction(num_particles, box_length, cutoff):
-    """
-    The tail correction associated with using a cutoff radius.
-    
-    Computes the tail correction based on a cutoff radius used in the LJ energy calculation in reduced units.
-    
-    Parameters
-    ----------
-    num_particles : int
-        The number of particles in the system.
-    
-    box_length : int
-        Size of the box length of the system, used to calculate volume.
-    
-    cutoff : int
-        Cutoff distance.
-    
-    Returns
-    -------
-    tail_correction : float
-        The tail correction associated with using the cutoff.
-    """
-    
-    brackets = (1/3*math.pow(1/cutoff,9)) - math.pow(1/cutoff,3)
-    volume = box_length**3
-    
-    constant = ((8*math.pi*(num_particles**2))/(3*volume))
-    
-    tail_correction = constant * brackets
-    
-    return tail_correction
-
-def accept_or_reject(delta_U, beta):
-    """
-    Accept or reject a move based on the Metropolis criterion.
-    
-    Parameters
-    ----------
-    detlta_U : float
-        The change in energy for moving system from state m to n.
-    beta : float
-        1/temperature
-    
-    Returns
-    -------
-    boolean
-        Whether the move is accepted.
-    """
-    if delta_U <= 0.0:
-        accept = True
-    else:
-        #Generate a random number on (0,1)
-        random_number = random.random()
-        p_acc = math.exp(-beta*delta_U)
-        
-        if random_number < p_acc:
-            accept = True
-        else:
-            accept = False
-    return accept
 
 def calculate_pair_energy(coordinates, i_particle, box_length, cutoff):
     """
@@ -238,6 +113,35 @@ def calculate_pair_energy(coordinates, i_particle, box_length, cutoff):
     
     return e_total
 
+def calculate_distance(coord1, coord2, box_length=None):
+    """
+    Calculate the distance between two points. When box_length is set, the minimum image convention is used to calculate the distance between the points.
+
+    Parameters
+    ----------
+    coord1, coord2 : list
+        The coordinates of the points, [x, y, z]
+    
+    box_length : float, optional
+        The box length
+
+    Returns
+    -------
+    distance : float
+        The distance between the two points accounting for periodic boundaries
+    """
+    distance = 0
+        
+    for i in range(3):
+        hold_dist = abs(coord2[i] - coord1[i])
+    
+        if (box_length):    
+            if hold_dist > box_length/2:
+                hold_dist = hold_dist - (box_length * round(hold_dist/box_length))
+        distance += math.pow(hold_dist, 2)
+
+    return math.sqrt(distance)
+
 def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
     """
     Run a Monte Carlo simulation with the specific parameters.
@@ -259,7 +163,7 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
 
     # Energy calculations
     total_energy = calculate_total_energy(coordinates, box_length, cutoff)
-    total_correction = calculate_tail_correction(num_particles, box_length, cutoff)
+    total_correction = util.calculate_tail_correction(num_particles, box_length, cutoff)
     total_energy += total_correction
 
 
@@ -285,7 +189,7 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
         delta_energy = proposed_energy - current_energy
         
         # 6. Calculate if we accept the move based on energy difference.
-        accept = accept_or_reject(delta_energy, beta)
+        accept = util.accept_or_reject(delta_energy, beta)
         
         # 7. If accepted, move the particle.
         if accept:
