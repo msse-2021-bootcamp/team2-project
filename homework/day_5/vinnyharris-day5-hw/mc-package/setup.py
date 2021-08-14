@@ -3,12 +3,12 @@ import setuptools
 setuptools.setup(
     name="mcsim",
     version="0.0.1",
-    author="Kevin Fong",
-    author_email="kevin_fong@.com",
+    author="Vinny Harris-Riviello",
+    author_email="vinny_harris@berkeley.com",
     description="A small example package",
     long_description="A sample Python package which performs MC simulation.",
     long_description_content_type="text/markdown",
-    url="https://github.com/USERNAME/REPONAME",
+    url="https://github.com/vinnyasa",
     project_urls={
         "Bug Tracker": "https://github.com/pypa/sampleproject/issues",
     },
