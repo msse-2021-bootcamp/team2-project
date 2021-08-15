@@ -1,5 +1,5 @@
 """
-Test for mcsim package.
+Test for mcsim package - monte carlo module.
 """
 import math
 import mcsim.monte_carlo as mc

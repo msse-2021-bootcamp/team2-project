@@ -1,3 +1,7 @@
+import math
+import random
+
+
 def accept_or_reject(delta_U, beta):
     """
     Accept or reject a move based on the Metropolis criterion.

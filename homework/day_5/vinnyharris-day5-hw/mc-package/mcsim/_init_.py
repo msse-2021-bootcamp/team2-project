@@ -13,4 +13,6 @@ from .monte_carlo_np import calculate_pair_energy_np
 from .monte_carlo_np import run_simulation_np
 
 
-from .utils import utils
+from .utils import accept_or_reject
+from .utils import calculate_tail_correction
+from .utils import read_xyz

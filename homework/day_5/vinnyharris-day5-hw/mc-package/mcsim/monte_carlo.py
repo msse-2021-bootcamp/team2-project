@@ -1,5 +1,5 @@
 """
-Functions for running a Motne Carlo Simulation
+Functions for running a Monte Carlo Simulation
 """
 
 import math
