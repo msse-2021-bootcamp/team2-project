@@ -85,12 +85,23 @@ def calculate_total_energy_np(coordinates_np, box_length, cutoff):
     """
     
     total_energy = 0
-    distance = 0
+    energy = 0
     
-    distance = calculate_distance_np(coordinates_np, coordinates_np)
-    total_energy = distance[distance < cutoff]
+    for i in coordinates_np:
+        c_np = np.array(i)
+        
+        # Get distance
+        distance_np = calculate_distance_np(coordinates_np, c_np, box_length)
+        
+        # Cutoff
+        distance = distance_np[distance_np < cutoff]
+        
+        # Non zero
+        distance_nz = distance[distance != 0]
+        
+        total_energy += calculate_lj_np(distance_nz)
 
-    return total_energy.sum()
+    return total_energy.sum()/2
 
 
 def calculate_pair_energy_np(coordinates_np, i_particle, box_length, cutoff):
