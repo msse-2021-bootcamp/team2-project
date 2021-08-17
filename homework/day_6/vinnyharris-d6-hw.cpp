@@ -12,19 +12,15 @@ double calculateIntegral(double a, double b, int nPoints) {
 
     // Calculate dx
     double dx = (b-a) / nPoints;
-    std::cout << "dx: " << dx << '\n';
-
     double totalArea = 0.0;
 
     for(int i = 0; i < nPoints; i++) {
 
         // get checkPoint
         double midPoint = i * dx + dx/2.0;
-        std::cout << "midPoint: " << midPoint << '\n';
 
         //calculate integrant
         double fx = calculateFx(midPoint);
-        std::cout << "fx: " << midPoint << '\n';
 
         // Get rectangle area
         totalArea += dx * fx;
