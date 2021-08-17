@@ -21,6 +21,7 @@ rectangleArea = fx * dx
 Sum of all rectangleAreas
 
 6. The main function handles the call to the integration function and printing the result.
+Based on our calculations we observed that 40 nPoints give a good 4 decimal approcimation.
 
 
 
