@@ -6,6 +6,7 @@
 #include <array>
 #include <random> // for random numbers
 #include <chrono> // for generating the seed
+#include <fstream> 
 
 using namespace std;
 typedef std::array<double, 3> AtomCoord;
@@ -163,16 +164,18 @@ bool accept_or_reject(double delta_U, double beta)
     return accept;
 }
 
-Coordinates mc_simulation(Coordinates coords, double box_length, int cutoff, double reduced_temperature, int num_steps, double max_displacement, int freq)
+void mc_simulation(Coordinates coords, double box_length, int cutoff, double reduced_temperature, int num_steps, double max_displacement, int freq)
 {
+    auto start = chrono::high_resolution_clock::now();
+    
     int num_particles = coords.size();
     double beta = 1/reduced_temperature;
 
     //Total energy calculations
     double total_energy = calculate_total_energy(coords, box_length, cutoff);
-    cout << "Initial Total Energy: " << total_energy << endl;
+    //cout << "Initial Total Energy: " << total_energy << endl;
     double total_correction = calculate_tail_correction(num_particles, box_length, cutoff);
-    cout << "Total Correction: " << total_correction << endl;
+    //cout << "Total Correction: " << total_correction << endl;
 
     total_energy += total_correction;
 
@@ -213,22 +216,26 @@ Coordinates mc_simulation(Coordinates coords, double box_length, int cutoff, dou
         coords[random_particle][2] -= z_rand;
         }
         
-        if (i % freq == 0)
+        /*if (i % freq == 0)
         {
         cout << "Step: " << i << " Average energy: " << total_energy/num_particles << endl;
-        }
+        }*/
+    
     }
-    return coords;
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = end - start;
+    out_file << " elapsed time  " << elapsed.count() << " s\n";
 }
  
 int main(void)
 {   
     re.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::pair<Coordinates, double> xyz_info = read_xyz("../../lj_sample_configurations/lj_sample_config_periodic1.txt");
+    std::pair<Coordinates, double> xyz_info = read_xyz("../lj_sample_configurations/lj_sample_config_periodic1.txt");
 
     Coordinates coords = xyz_info.first;
     double box_length = xyz_info.second;
-
+    ofstream out_file("MCsim_cpp.txt");
+    
     /*
 
     Testing the various functions
@@ -248,7 +255,45 @@ int main(void)
     cout << accept_or_reject(0, 1) << endl;
     cout << accept_or_reject(1, 1) << endl;
     */
-
-    Coordinates x = mc_simulation(coords, box_length, 3, 0.9, 50000, 0.1, 10000);     
+    out_file<<"For base case:";
+    mc_simulation(coords, box_length, 3, 0.9, 50000, 0.1, 10000);
+    double temperatures[3] = {0.4, 1.4, 3.1};
+    out_file<<"Testing Temperature:"<<endl;
+    for (int i=0; i<3; i++)
+    {
+        for (int trial=1; trial<4; trial++)
+        {
+            out_file<<"For reduced_temp "<<temperatures[i]<<" , trial "<<trial;
+            mc_simulation(coords, box_length, 3, temperatures[i], 50000, 0.1, 10000);}
+        }
+    double cutoffs[3] = {2.5, 3.5, 4.0};
+    out_file<<"Testing cutoff:"<<endl;
+    for (int i=0; i<3; i++)
+    {
+        for (int trial=1; trial<4; trial++)
+        {
+            out_file<<"For cutoff "<<cutoffs[i]<<" , trial "<<trial;
+            mc_simulation(coords, box_length, cutoffs[i], 0.9, 50000, 0.1, 10000);}
+        }    
+    int nums_steps[3] = {10000,30000,70000};
+    out_file<<"Testing Number of Steps:"<<endl;
+    for (int i=0; i<3; i++)
+    {
+        for (int trial=1; trial<4; trial++)
+        {
+            out_file<<"For "<<nums_steps[i]<<" steps, trial "<<trial;
+            mc_simulation(coords, box_length, 3, 0.9, nums_steps[i], 0.1, 10000);}
+        } 
+    
+    double displacements[3] = {0.05,0.15,0.2};
+    out_file<<"Testing Max Displacements:"<<endl;
+    for (int i=0; i<3; i++)
+    {
+        for (int trial=1; trial<4; trial++)
+        {
+            out_file<<"For max displacement of "<<displacements[i]<<" , trial "<<trial;
+            mc_simulation(coords, box_length, 3, 0.9, 50000, displacements[i], 10000);}
+        } 
     return 0;
+
 }
