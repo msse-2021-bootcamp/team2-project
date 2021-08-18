@@ -1,6 +1,7 @@
-import mcsim.utils as utils
+from .utils import *
 import random
 import numpy as np
+import time
 
 def calculate_distance_np(coord1, coord2, box_length=None):
     """
@@ -140,7 +141,7 @@ def calculate_pair_energy_np(coordinates_np, i_particle, box_length, cutoff):
     return e_total
 
 
-def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
+def run_simulation_np(coordinates_np, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
     """
     Run a Monte Carlo simulation with the specific parameters and using NumPy for performance gain.
 
@@ -155,15 +156,16 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
     freq_checks: int
     
     """
+    start_time = time.time()
     # Calculated quantities
     beta = 1 / reduced_temperature
     num_particles = len(coordinates_np)
 
     # Energy calculations
     total_energy = calculate_total_energy_np(coordinates_np, box_length, cutoff)
-    print(total_energy)
+    #print(total_energy)
     total_correction = calculate_tail_correction(num_particles, box_length, cutoff)
-    print(total_correction)
+    #print(total_correction)
     total_energy += total_correction
 
 
@@ -201,7 +203,9 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
             coordinates_np[random_particle][2] -= z_rand
         
         # 8. Print the energy if step is a multiple of freq.
-        if step % freq == 0:
-            print(step, total_energy/num_particles)
-        
-    return coordinates_np
+        #if step % freq == 0:
+        #    print(step, total_energy/num_particles)
+    
+    end_time = time.time()
+    elapsed_time = (end_time-start_time)
+    return elapsed_time

@@ -4,6 +4,8 @@ Functions for running a Monte Carlo Simulation
 
 import math
 import random
+from .utils import *
+import time
 
 def calculate_total_energy(coordinates, box_length, cutoff):
     """
@@ -160,6 +162,7 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
     freq_checks: int
     
     """
+    start_time = time.time()
     # Calculated quantities
     beta = 1 / reduced_temperature
     num_particles = len(coordinates)
@@ -204,9 +207,12 @@ def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_ste
             coordinates[random_particle][2] -= z_rand
         
         # 8. Print the energy if step is a multiple of freq.
-        if step % freq == 0:
-            print(step, total_energy/num_particles)
+        #if step % freq == 0:
+        #    print(step, total_energy/num_particles)
+    end_time = time.time()
 
-    return coordinates
+    elapsed_time = end_time-start_time
+
+    return elapsed_time
 
 
