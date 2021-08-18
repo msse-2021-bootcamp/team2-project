@@ -1,4 +1,4 @@
-# include <iostream>
+#include <iostream>
 #include <random>       // for random numbers
 #include <chrono>       // for generating the seed
 #include <fstream>      // for reading/writing files
@@ -293,58 +293,7 @@ double calculateTailCorrection(double boxLen, int nParticles, double cutoff)
 }
 
 /*
-run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
-    
-# Calculated quantities
-    beta = 1 / reduced_temperature
-    num_particles = len(coordinates)
-
-    # Energy calculations
-    total_energy = calculate_total_energy(coordinates, box_length, cutoff)
-    total_correction = calculate_tail_correction(num_particles, box_length, cutoff)
-    total_energy += total_correction
-
-
-    for step in range(num_steps):
-    # 1. Randomly pick one of the particles.
-        random_particle = random.randrange(num_particles)
-        
-        # 2. Calculate the interaction energy of the selected particle with the system.
-        current_energy = calculate_pair_energy(coordinates, random_particle, box_length, cutoff)
-        
-        # 3. Generate a random x, y, z displacement.
-        x_rand = random.uniform(-max_displacement, max_displacement)
-        y_rand = random.uniform(-max_displacement, max_displacement)
-        z_rand = random.uniform(-max_displacement, max_displacement)
-        
-        # 4. Modify the coordinate of Nth particle by generated displacements.
-        coordinates[random_particle][0] += x_rand
-        coordinates[random_particle][1] += y_rand
-        coordinates[random_particle][2] += z_rand
-        
-        # 5. Calculate the interaction energy of the moved particle with the system and store this value.
-        proposed_energy = calculate_pair_energy(coordinates, random_particle, box_length, cutoff)
-        delta_energy = proposed_energy - current_energy
-        
-        # 6. Calculate if we accept the move based on energy difference.
-        accept = accept_or_reject(delta_energy, beta)
-        
-        # 7. If accepted, move the particle.
-        if accept:
-            total_energy += delta_energy
-        else:
-            #Move not accepted, roll back coordinates
-            coordinates[random_particle][0] -= x_rand
-            coordinates[random_particle][1] -= y_rand
-            coordinates[random_particle][2] -= z_rand
-        
-        # 8. Print the energy if step is a multiple of freq.
-        if step % freq == 0:
-            print(step, total_energy/num_particles)
-
-    return coordinates
-    
-    
+    Runs Monte Carlo Simulation
 */
 void runSimulation(Coordinates coords, double boxLen, double cutoff, double reducedTemp, int numSteps, double maxDisplacement, int frequency=1000)
 {   
@@ -404,6 +353,9 @@ void runSimulation(Coordinates coords, double boxLen, double cutoff, double redu
     
 }
 
+/*
+    Validates functions in this file
+*/
 void validate() {
 
     double cutoff = 3.0;
@@ -437,13 +389,15 @@ void validate() {
 }
 
 
-
+/*
+    Main
+*/
 int main(void)
 {   
     // Initialize random number generation based on time
     re.seed(std::chrono::system_clock::now().time_since_epoch().count());
     
-    //validate();
+    validate();
 
     std::pair<Coordinates, double> xyzInfo = read_xyz("../../../../lj_sample_configurations/lj_sample_config_periodic1.txt");
 
