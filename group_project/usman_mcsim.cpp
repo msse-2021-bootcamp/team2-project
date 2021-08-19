@@ -282,7 +282,7 @@ int main(void)
     out_file<<"Testing Max Displacements:"<<endl;
     for (int i=0; i<3; i++)
     {
-        for (int trial=1; trial<3; trial++)
+        for (int trial=1; trial<=3; trial++)
         {
             out_file<<"For max displacement of "<<displacements[i]<<" , trial "<<trial;
             mc_simulation(coords, box_length, cutoff, reduced_temp, steps, displacements[i], 10000, out_file);
