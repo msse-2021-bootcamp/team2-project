@@ -239,10 +239,16 @@ int main(void)
     double reduced_temp = 0.9;
     int steps = 50000;
     double max_displacement = 0.1;
-
-    out_file<<"For base case:";
-    mc_simulation(coords, box_length, cutoff, reduced_temp, steps, max_displacement, 10000, out_file);
-    double temperatures[3] = {0.4, 1.4, 3.1};
+    
+    
+    for (size_t i = 0; i < 3; i++)
+    {
+        out_file<<"For base case:";
+        mc_simulation(coords, box_length, cutoff, reduced_temp, steps, max_displacement, 10000, out_file);
+   
+    }
+    
+     double temperatures[3] = {0.4, 1.4, 3.1};
     out_file<<"Testing Temperature:"<<endl;
     for (int i=0; i<3; i++)
     {
@@ -258,7 +264,8 @@ int main(void)
         for (int trial=1; trial<4; trial++)
         {
             out_file<<"For cutoff "<<cutoffs[i]<<" , trial "<<trial;
-            mc_simulation(coords, box_length, cutoffs[i], reduced_temp, steps, max_displacement,10000, out_file);}
+            mc_simulation(coords, box_length, cutoffs[i], reduced_temp, steps, max_displacement,10000, out_file);
+            }
         }    
     int nums_steps[3] = {10000,30000,70000};
     out_file<<"Testing Number of Steps:"<<endl;
@@ -267,13 +274,15 @@ int main(void)
         for (int trial=1; trial<4; trial++)
         {
             out_file<<"For "<<nums_steps[i]<<" steps, trial "<<trial;
-            mc_simulation(coords, box_length, cutoff, reduced_temp, nums_steps[i], max_displacement, 10000, out_file);}
-        } 
+            mc_simulation(coords, box_length, cutoff, reduced_temp, nums_steps[i], max_displacement, 10000, out_file);
+        }
+    } 
+    
     double displacements[3] = {0.05,0.15,0.2};
     out_file<<"Testing Max Displacements:"<<endl;
     for (int i=0; i<3; i++)
     {
-        for (int trial=1; trial<2; trial++)
+        for (int trial=1; trial<=3; trial++)
         {
             out_file<<"For max displacement of "<<displacements[i]<<" , trial "<<trial;
             mc_simulation(coords, box_length, cutoff, reduced_temp, steps, displacements[i], 10000, out_file);
@@ -281,6 +290,6 @@ int main(void)
     }
     out_file << "DONE" << endl;
     out_file.close();
+    
     return 0;
-
 }
