@@ -238,7 +238,7 @@ int main(void)
     double cutoff=3.0;
     double reduced_temp = 0.9;
     int steps = 50000;
-    double max_displacement = 0,1
+    double max_displacement = 0.1;
 
     out_file<<"For base case:";
     mc_simulation(coords, box_length, cutoff, reduced_temp, steps, max_displacement, 10000, out_file);
@@ -276,7 +276,7 @@ int main(void)
         for (int trial=1; trial<2; trial++)
         {
             out_file<<"For max displacement of "<<displacements[i]<<" , trial "<<trial;
-            mc_simulation(coords, box_length, cutoff, reduced_temp, steps, displacements[i], 10000, out_file,);
+            mc_simulation(coords, box_length, cutoff, reduced_temp, steps, displacements[i], 10000, out_file);
         } 
     }
     return 0;
