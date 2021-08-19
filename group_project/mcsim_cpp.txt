@@ -1,36 +1,40 @@
-For base case: elapsed time  15.4184 s
+For base case: elapsed time  17.672 s
+For base case: elapsed time  17.5485 s
+For base case: elapsed time  15.8583 s
 Testing Temperature:
-For reduced_temp 0.4 , trial 1 elapsed time  15.5284 s
-For reduced_temp 0.4 , trial 2 elapsed time  15.4266 s
-For reduced_temp 0.4 , trial 3 elapsed time  15.421 s
-For reduced_temp 1.4 , trial 1 elapsed time  15.4205 s
-For reduced_temp 1.4 , trial 2 elapsed time  15.4244 s
-For reduced_temp 1.4 , trial 3 elapsed time  15.4245 s
-For reduced_temp 3.1 , trial 1 elapsed time  15.4121 s
-For reduced_temp 3.1 , trial 2 elapsed time  15.4115 s
-For reduced_temp 3.1 , trial 3 elapsed time  15.423 s
+For reduced_temp 0.4 , trial 1 elapsed time  15.859 s
+For reduced_temp 0.4 , trial 2 elapsed time  15.8576 s
+For reduced_temp 0.4 , trial 3 elapsed time  15.8702 s
+For reduced_temp 1.4 , trial 1 elapsed time  15.8688 s
+For reduced_temp 1.4 , trial 2 elapsed time  15.9016 s
+For reduced_temp 1.4 , trial 3 elapsed time  15.8686 s
+For reduced_temp 3.1 , trial 1 elapsed time  15.8594 s
+For reduced_temp 3.1 , trial 2 elapsed time  15.8995 s
+For reduced_temp 3.1 , trial 3 elapsed time  15.8583 s
 Testing cutoff:
-For cutoff 2.5 , trial 1 elapsed time  14.7503 s
-For cutoff 2.5 , trial 2 elapsed time  14.7611 s
-For cutoff 2.5 , trial 3 elapsed time  14.7594 s
-For cutoff 3.5 , trial 1 elapsed time  15.4116 s
-For cutoff 3.5 , trial 2 elapsed time  15.4648 s
-For cutoff 3.5 , trial 3 elapsed time  15.4367 s
-For cutoff 4 , trial 1 elapsed time  16.7153 s
-For cutoff 4 , trial 2 elapsed time  16.717 s
-For cutoff 4 , trial 3 elapsed time  16.7139 s
+For cutoff 2.5 , trial 1 elapsed time  15.1774 s
+For cutoff 2.5 , trial 2 elapsed time  15.174 s
+For cutoff 2.5 , trial 3 elapsed time  15.1781 s
+For cutoff 3.5 , trial 1 elapsed time  15.8549 s
+For cutoff 3.5 , trial 2 elapsed time  15.8564 s
+For cutoff 3.5 , trial 3 elapsed time  15.8549 s
+For cutoff 4 , trial 1 elapsed time  17.2063 s
+For cutoff 4 , trial 2 elapsed time  17.2047 s
+For cutoff 4 , trial 3 elapsed time  17.2476 s
 Testing Number of Steps:
-For 10000 steps, trial 1 elapsed time  3.17446 s
-For 10000 steps, trial 2 elapsed time  3.18655 s
-For 10000 steps, trial 3 elapsed time  3.41979 s
-For 30000 steps, trial 1 elapsed time  10.0041 s
-For 30000 steps, trial 2 elapsed time  10.01 s
-For 30000 steps, trial 3 elapsed time  9.92384 s
-For 70000 steps, trial 1 elapsed time  21.6632 s
-For 70000 steps, trial 2 elapsed time  21.52 s
-For 70000 steps, trial 3 elapsed time  21.5309 s
+For 10000 steps, trial 1 elapsed time  3.27233 s
+For 10000 steps, trial 2 elapsed time  3.33291 s
+For 10000 steps, trial 3 elapsed time  3.27731 s
+For 30000 steps, trial 1 elapsed time  9.56605 s
+For 30000 steps, trial 2 elapsed time  9.5609 s
+For 30000 steps, trial 3 elapsed time  9.55973 s
+For 70000 steps, trial 1 elapsed time  22.1412 s
+For 70000 steps, trial 2 elapsed time  22.1552 s
+For 70000 steps, trial 3 elapsed time  22.1902 s
 Testing Max Displacements:
-For max displacement of 0.05 , trial 1 elapsed time  15.3957 s
-For max displacement of 0.15 , trial 1 elapsed time  15.4095 s
-For max displacement of 0.2 , trial 1 elapsed time  15.4147 s
-DONE
+For max displacement of 0.05 , trial 1 elapsed time  15.8538 s
+For max displacement of 0.05 , trial 2 elapsed time  15.8835 s
+For max displacement of 0.15 , trial 1 elapsed time  15.8923 s
+For max displacement of 0.15 , trial 2 elapsed time  15.8635 s
+For max displacement of 0.2 , trial 1 elapsed time  15.8559 s
+For max displacement of 0.2 , trial 2 elapsed time  15.8673 s
