@@ -290,7 +290,6 @@ int main(void)
     }
     out_file << "DONE" << endl;
     out_file.close();
-
+    
     return 0;
-
 }
