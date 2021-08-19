@@ -233,7 +233,7 @@ int main(void)
 
     Coordinates coords = xyz_info.first;
     double box_length = xyz_info.second;
-    ofstream out_file("MCsim_cpp.txt");
+    ofstream out_file("mcsim_cpp.txt");
 
     double cutoff=3.0;
     double reduced_temp = 0.9;
@@ -279,6 +279,8 @@ int main(void)
             mc_simulation(coords, box_length, cutoff, reduced_temp, steps, displacements[i], 10000, out_file);
         } 
     }
+    out_file << "DONE" << endl;
+    out_file.close();
     return 0;
 
 }
