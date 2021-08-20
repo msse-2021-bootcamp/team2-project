@@ -140,7 +140,7 @@ def calculate_pair_energy_np(coordinates_np, i_particle, box_length, cutoff):
     return e_total
 
 
-def run_simulation(coordinates, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
+def run_simulation_np(coordinates, box_length, cutoff, reduced_temperature, num_steps, max_displacement=0.1, freq=1000):
     """
     Run a Monte Carlo simulation with the specific parameters and using NumPy for performance gain.
 
