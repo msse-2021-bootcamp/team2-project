@@ -177,14 +177,10 @@ def run_simulation_np(coordinates_np, box_length, cutoff, reduced_temperature, n
         current_energy = calculate_pair_energy_np(coordinates_np, random_particle, box_length, cutoff)
         
         # 3. Generate a random x, y, z displacement.
-        x_rand = random.uniform(-max_displacement, max_displacement)
-        y_rand = random.uniform(-max_displacement, max_displacement)
-        z_rand = random.uniform(-max_displacement, max_displacement)
+        rand_np=np.random.uniform(-max_displacement, max_displacement, 3)
         
         # 4. Modify the coordinate of Nth particle by generated displacements.
-        coordinates_np[random_particle][0] += x_rand
-        coordinates_np[random_particle][1] += y_rand
-        coordinates_np[random_particle][2] += z_rand
+        coordinates_np[random_particle]= coordinates_np[random_particle] + rand_np
         
         # 5. Calculate the interaction energy of the moved particle with the system and store this value.
         proposed_energy = calculate_pair_energy_np(coordinates_np, random_particle, box_length, cutoff)
@@ -198,9 +194,7 @@ def run_simulation_np(coordinates_np, box_length, cutoff, reduced_temperature, n
             total_energy += delta_energy
         else:
             #Move not accepted, roll back coordinates
-            coordinates_np[random_particle][0] -= x_rand
-            coordinates_np[random_particle][1] -= y_rand
-            coordinates_np[random_particle][2] -= z_rand
+            coordinates_np[random_particle]= coordinates_np[random_particle] - rand_np
         
         # 8. Print the energy if step is a multiple of freq.
         #if step % freq == 0:
